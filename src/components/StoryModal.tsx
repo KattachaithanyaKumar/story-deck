@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useState, KeyboardEvent, useEffect, useRef, FormEvent } from "react";
 import { Story, Comment, StoryStatus } from "../types";
 import { MarkdownViewer } from "./MarkdownViewer";

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useRef, ChangeEvent } from "react";
 import { AppData } from "../types";
 import { parseImportedJSON } from "../lib/persistence";

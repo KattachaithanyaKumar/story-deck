@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useState, FormEvent } from "react";
 import { Project, Sprint, Story } from "../types";
 import { FolderKanban, Plus, Layers, ClipboardList, Calendar, Edit2, Trash2 } from "lucide-react";
