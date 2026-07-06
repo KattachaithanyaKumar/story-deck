@@ -144,10 +144,6 @@ export default function App() {
       <header className="bg-white border-b border-slate-200/60 shrink-0 px-6 py-4.5" id="app-header">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            {/* Custom logo inspired by the attached design: bold white sans 'S' inside black rounded square */}
-            <div className="w-9 h-9 bg-black rounded-xl text-white font-black text-xl flex items-center justify-center select-none shadow-md shadow-slate-950/20 font-sans tracking-tighter shrink-0 border border-black transition hover:scale-105 duration-150">
-              S
-            </div>
             <div>
               <div className="flex items-center gap-2.5">
                 <h1 className="text-base font-extrabold tracking-tight text-slate-900 font-sans">
@@ -373,7 +369,7 @@ export default function App() {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 max-w-md w-full">
-                  <div className="bg-slate-50 p-4 border border-slate-150 rounded-xl text-left shadow-sm shadow-slate-100/10">
+                  <div className="bg-slate-50 p-4 border border-slate-200/60 rounded-xl text-left shadow shadow-slate-100/10">
                     <span className="text-[9px] font-extrabold text-indigo-600 font-mono tracking-wider block uppercase">
                       ORGANIZATION
                     </span>
@@ -383,7 +379,7 @@ export default function App() {
                     </p>
                   </div>
 
-                  <div className="bg-slate-50 p-4 border border-slate-150 rounded-xl text-left shadow-sm shadow-slate-100/10">
+                  <div className="bg-slate-50 p-4 border border-slate-200/60 rounded-xl text-left shadow shadow-slate-100/10">
                     <span className="text-[9px] font-extrabold text-indigo-600 font-mono tracking-wider block uppercase">
                       PERSISTENCE
                     </span>
