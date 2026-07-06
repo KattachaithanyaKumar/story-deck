@@ -1,0 +1,6 @@
+{
+  "name": "Story Deck",
+  "description": "A minimalist, offline-first personal Jira work and sprint story tracker supporting local file system persistence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
