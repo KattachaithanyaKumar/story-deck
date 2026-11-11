@@ -35,30 +35,34 @@ const COLUMNS: ColumnConfig[] = [
   {
     id: "todo",
     title: "To Do",
-    bgColor: "bg-slate-50/50",
-    borderColor: "border-slate-200/40",
-    badgeColor: "bg-slate-100 text-slate-600 border-slate-200",
+    bgColor: "bg-slate-50/50 dark:bg-slate-900/60",
+    borderColor: "border-slate-200/40 dark:border-slate-800",
+    badgeColor:
+      "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700",
   },
   {
     id: "in_progress",
     title: "In Progress",
-    bgColor: "bg-slate-50/50",
-    borderColor: "border-slate-200/40",
-    badgeColor: "bg-orange-50 text-orange-600 border-orange-100",
+    bgColor: "bg-slate-50/50 dark:bg-slate-900/60",
+    borderColor: "border-slate-200/40 dark:border-slate-800",
+    badgeColor:
+      "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-100 dark:border-orange-500/30",
   },
   {
     id: "in_review",
     title: "In Review",
-    bgColor: "bg-slate-50/50",
-    borderColor: "border-slate-200/40",
-    badgeColor: "bg-purple-50 text-purple-600 border-purple-100",
+    bgColor: "bg-slate-50/50 dark:bg-slate-900/60",
+    borderColor: "border-slate-200/40 dark:border-slate-800",
+    badgeColor:
+      "bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-500/30",
   },
   {
     id: "done",
     title: "Done",
-    bgColor: "bg-slate-50/50",
-    borderColor: "border-slate-200/40",
-    badgeColor: "bg-emerald-50 text-emerald-600 border-emerald-100",
+    bgColor: "bg-slate-50/50 dark:bg-slate-900/60",
+    borderColor: "border-slate-200/40 dark:border-slate-800",
+    badgeColor:
+      "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-500/30",
   },
 ];
 
@@ -85,7 +89,7 @@ export function KanbanBoard({
   // Submit inline story form
   const handleAddStorySubmit = (e: FormEvent, columnId: StoryStatus) => {
     e.preventDefault();
-    if (!newTitle.trim() || !newJiraLink.trim()) return;
+    if (!newTitle.trim()) return;
 
     onAddStory(newTitle, newJiraLink, newDescription, columnId);
 
@@ -156,7 +160,7 @@ export function KanbanBoard({
             onDrop={(e) => handleDrop(e, col.id)}
             className={`flex flex-col rounded-2xl border p-4.5 min-h-[500px] transition duration-200 ${col.bgColor} ${
               isDragOver
-                ? "border-indigo-500 bg-slate-50/90 shadow-[0_4px_24px_rgba(99,102,241,0.08)] scale-[1.01]"
+                ? "border-indigo-500 dark:border-indigo-400 bg-slate-50/90 dark:bg-slate-800/80 shadow-[0_4px_24px_rgba(99,102,241,0.08)] scale-[1.01]"
                 : col.borderColor
             }`}
             id={`column-container-${col.id}`}
@@ -164,14 +168,14 @@ export function KanbanBoard({
             {/* Column Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <h4 className="font-bold text-sm text-slate-800">{col.title}</h4>
+                <h4 className="font-bold text-sm text-slate-800 dark:text-slate-100">{col.title}</h4>
                 <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full border ${col.badgeColor}`}>
                   {columnStories.length}
                 </span>
               </div>
               <button
                 onClick={() => setAddingToColumn(col.id)}
-                className="text-slate-400 hover:text-slate-800 hover:bg-slate-100 p-1.5 rounded-lg transition"
+                className="text-slate-400 hover:text-slate-800 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 rounded-lg transition"
                 title={`Add story to ${col.title}`}
                 id={`add-story-btn-${col.id}`}
               >
@@ -182,9 +186,9 @@ export function KanbanBoard({
             {/* Stories Cards List */}
             <div className="flex flex-col gap-3 overflow-y-auto max-h-[600px] pr-1" id={`stories-column-list-${col.id}`}>
               {columnStories.length === 0 ? (
-                <div className="text-center py-10 border border-dashed border-slate-200 rounded-xl" id={`empty-col-${col.id}`}>
-                  <ClipboardList className="w-6 h-6 text-slate-300 mx-auto mb-1 stroke-[1.5]" />
-                  <p className="text-slate-400 text-xs">Empty column</p>
+                <div className="text-center py-10 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl" id={`empty-col-${col.id}`}>
+                  <ClipboardList className="w-6 h-6 text-slate-300 dark:text-slate-600 mx-auto mb-1 stroke-[1.5]" />
+                  <p className="text-slate-400 dark:text-slate-500 text-xs">Empty column</p>
                 </div>
               ) : (
                 columnStories.map((story) => {
@@ -211,16 +215,20 @@ export function KanbanBoard({
 
                   // Status badge style matching screenshot
                   let statusLabel = "TO DO";
-                  let statusBadgeClass = "bg-slate-100 text-slate-700 border-slate-200/60";
+                  let statusBadgeClass =
+                    "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200/60 dark:border-slate-700";
                   if (story.status === "in_progress") {
                     statusLabel = "PROGRESS";
-                    statusBadgeClass = "bg-[#FF7A00]/10 text-[#FF7A00] border-[#FF7A00]/20";
+                    statusBadgeClass =
+                      "bg-[#FF7A00]/10 text-[#FF7A00] dark:text-orange-400 border-[#FF7A00]/20";
                   } else if (story.status === "in_review") {
                     statusLabel = "REVIEW";
-                    statusBadgeClass = "bg-purple-100 text-purple-700 border-purple-200/40";
+                    statusBadgeClass =
+                      "bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-200/40 dark:border-purple-500/30";
                   } else if (story.status === "done") {
                     statusLabel = "DONE";
-                    statusBadgeClass = "bg-emerald-100 text-emerald-700 border-emerald-200/40";
+                    statusBadgeClass =
+                      "bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200/40 dark:border-emerald-500/30";
                   }
 
                   return (
@@ -230,7 +238,7 @@ export function KanbanBoard({
                       onDragStart={(e) => handleDragStart(e, story.id)}
                       onDragEnd={handleDragEnd}
                       onClick={() => onSelectStory(story.id)}
-                      className={`bg-white border border-slate-200/60 hover:border-slate-300 rounded-2xl p-4 flex flex-col gap-2.5 cursor-pointer select-none transition shadow-sm hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] group ${
+                      className={`bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600 rounded-2xl p-4 flex flex-col gap-2.5 cursor-pointer select-none transition shadow-sm dark:shadow-none hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] group ${
                         isDragging ? "opacity-30 border-dashed border-indigo-500 scale-95" : ""
                       }`}
                       id={`story-card-${story.id}`}
@@ -238,7 +246,7 @@ export function KanbanBoard({
                       {/* Ticket key / Tags and external link */}
                       <div className="flex items-center justify-between gap-1">
                         {key ? (
-                          <div className="flex items-center gap-1 text-[9px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 px-2 py-0.5 rounded-md shrink-0">
+                          <div className="flex items-center gap-1 text-[9px] font-mono font-bold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-500/30 px-2 py-0.5 rounded-md shrink-0">
                             <Tag className="w-2.5 h-2.5 text-indigo-500" />
                             {key}
                           </div>
@@ -249,17 +257,28 @@ export function KanbanBoard({
                         )}
 
                         <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition duration-150 shrink-0">
-                          <a
-                            href={story.jiraLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()} // don't open modal
-                            className="text-slate-400 hover:text-indigo-600 p-1 hover:bg-slate-100 rounded transition"
-                            title="Open in Jira"
-                            id={`card-jira-link-${story.id}`}
-                          >
-                            <ExternalLink className="w-3.5 h-3.5" />
-                          </a>
+                          {story.jiraLink?.trim() ? (
+                            <a
+                              href={story.jiraLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()} // don't open modal
+                              className="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition"
+                              title="Open in Jira"
+                              id={`card-jira-link-${story.id}`}
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          ) : (
+                            <span
+                              aria-disabled="true"
+                              title="No Jira link set for this ticket"
+                              className="text-slate-300 dark:text-slate-600 p-1 rounded cursor-not-allowed opacity-50"
+                              id={`card-jira-link-disabled-${story.id}`}
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </span>
+                          )}
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -267,7 +286,7 @@ export function KanbanBoard({
                                 onDeleteStory(story.id);
                               }
                             }}
-                            className="text-slate-400 hover:text-red-600 p-1 hover:bg-slate-100 rounded transition"
+                            className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition"
                             title="Delete story"
                             id={`delete-story-btn-${story.id}`}
                           >
@@ -277,19 +296,19 @@ export function KanbanBoard({
                       </div>
 
                       {/* Story Title */}
-                      <span className="text-slate-800 text-xs font-semibold leading-relaxed line-clamp-3 group-hover:text-indigo-600 transition">
+                      <span className="text-slate-800 dark:text-slate-100 text-xs font-semibold leading-relaxed line-clamp-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
                         {story.title}
                       </span>
 
                       {/* Story Short Description (if exists) */}
                       {story.description && story.description.trim().length > 0 ? (
-                        <p className="text-slate-400 text-[10.5px] leading-relaxed line-clamp-2">
+                        <p className="text-slate-400 dark:text-slate-500 text-[10.5px] leading-relaxed line-clamp-2">
                           {story.description.replace(/[#*`_\[\]]/g, "")}
                         </p>
                       ) : null}
 
                       {/* Card Footer Metrics styled like the screenshot */}
-                      <div className="flex flex-wrap items-center justify-between gap-1.5 text-[10px] text-slate-500 border-t border-slate-100 pt-2.5">
+                      <div className="flex flex-wrap items-center justify-between gap-1.5 text-[10px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2.5">
                         <div className="flex items-center gap-1.5">
                           {/* Screenshot design: tag status block */}
                           <span className={`text-[8.5px] font-extrabold px-1.5 py-0.5 rounded tracking-wide border font-sans ${statusBadgeClass}`}>
@@ -311,7 +330,7 @@ export function KanbanBoard({
 
                           {commentsCount[story.id] > 0 && (
                             <div
-                              className="flex items-center gap-0.5 text-slate-500 bg-slate-50 border border-slate-200 px-1 py-0.5 rounded"
+                              className="flex items-center gap-0.5 text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-1 py-0.5 rounded"
                               title={`${commentsCount[story.id]} updates`}
                             >
                               <MessageSquare className="w-3 h-3 text-indigo-500" />
@@ -334,30 +353,30 @@ export function KanbanBoard({
       {/* Create Task Modal Overlay */}
       <AnimatePresence>
         {addingToColumn && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm font-sans animate-fade-in" id="add-story-modal-overlay">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 dark:bg-slate-950/70 backdrop-blur-sm font-sans animate-fade-in" id="add-story-modal-overlay">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="bg-white border border-slate-200 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col"
               id="add-story-modal-container"
             >
               {/* Header */}
-              <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50 shrink-0">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 px-6 py-4 bg-slate-50 dark:bg-slate-900/80 shrink-0">
                 <div className="flex items-center gap-2.5">
-                  <div className="bg-indigo-50 text-indigo-600 border border-indigo-100 p-2 rounded-xl flex items-center justify-center">
+                  <div className="bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/30 p-2 rounded-xl flex items-center justify-center">
                     <Plus className="w-4.5 h-4.5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-800 font-display">Create Story Card</h3>
-                    <p className="text-[10px] text-slate-500">Add a new ticket to your sprint board</p>
+                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 font-display">Create Story Card</h3>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400">Add a new ticket to your sprint board</p>
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setAddingToColumn(null)}
-                  className="text-slate-450 hover:text-slate-850 p-1.5 rounded-lg transition hover:bg-slate-100"
+                  className="text-slate-450 hover:text-slate-850 dark:hover:text-slate-100 p-1.5 rounded-lg transition hover:bg-slate-100 dark:hover:bg-slate-800"
                   id="close-add-modal-btn"
                 >
                   <X className="w-4 h-4" />
@@ -367,7 +386,7 @@ export function KanbanBoard({
               {/* Form */}
               <form onSubmit={(e) => handleAddStorySubmit(e, addingToColumn)} className="p-6 flex flex-col gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] uppercase tracking-wider text-slate-500 font-bold font-mono">
+                  <label className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold font-mono">
                     Story Title *
                   </label>
                   <input
@@ -376,28 +395,27 @@ export function KanbanBoard({
                     placeholder="e.g. JIRA-123 Fix Login Loop"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
-                    className="bg-slate-50 text-slate-800 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 focus:outline-none transition w-full"
+                    className="bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 focus:outline-none transition w-full placeholder:text-slate-400 dark:placeholder:text-slate-500"
                     id="modal-new-story-title"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] uppercase tracking-wider text-slate-500 font-bold font-mono">
-                    Jira Link *
+                  <label className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold font-mono">
+                    Jira Link (Optional)
                   </label>
                   <input
                     type="url"
-                    required
                     placeholder="e.g. https://company.atlassian.net/browse/JIRA-123"
                     value={newJiraLink}
                     onChange={(e) => setNewJiraLink(e.target.value)}
-                    className="bg-slate-50 text-slate-800 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 focus:outline-none transition w-full"
+                    className="bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 focus:outline-none transition w-full placeholder:text-slate-400 dark:placeholder:text-slate-500"
                     id="modal-new-story-jira-link"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] uppercase tracking-wider text-slate-500 font-bold font-mono">
+                  <label className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold font-mono">
                     Description (Optional)
                   </label>
                   <textarea
@@ -405,19 +423,19 @@ export function KanbanBoard({
                     rows={4}
                     value={newDescription}
                     onChange={(e) => setNewDescription(e.target.value)}
-                    className="bg-slate-50 text-slate-800 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 focus:outline-none transition w-full resize-none font-sans"
+                    className="bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 focus:outline-none transition w-full placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none font-sans"
                     id="modal-new-story-description"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] uppercase tracking-wider text-slate-500 font-bold font-mono">
+                  <label className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold font-mono">
                     Status / Column
                   </label>
                   <select
                     value={addingToColumn}
                     onChange={(e) => setAddingToColumn(e.target.value as StoryStatus)}
-                    className="bg-slate-50 text-slate-800 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:outline-none transition w-full"
+                    className="bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:outline-none transition w-full"
                     id="modal-new-story-status"
                   >
                     {COLUMNS.map((col) => (
@@ -429,7 +447,7 @@ export function KanbanBoard({
                 </div>
 
                 {/* Footer buttons */}
-                <div className="flex items-center justify-end gap-2.5 mt-2 border-t border-slate-100 pt-4">
+                <div className="flex items-center justify-end gap-2.5 mt-2 border-t border-slate-100 dark:border-slate-800 pt-4">
                   <button
                     type="button"
                     onClick={() => {
@@ -438,7 +456,7 @@ export function KanbanBoard({
                       setNewDescription("");
                       setAddingToColumn(null);
                     }}
-                    className="bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-800 text-xs font-semibold px-4 py-2 rounded-xl border border-slate-200 transition"
+                    className="bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100 text-xs font-semibold px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 transition"
                     id="modal-cancel-story-create"
                   >
                     Cancel

@@ -46,16 +46,16 @@ export function ProjectList({
   };
 
   return (
-    <div className="flex flex-col gap-4 font-sans bg-white border border-slate-100 rounded-2xl p-5 shadow-sm shadow-slate-100/60" id="project-list-section">
+    <div className="flex flex-col gap-4 font-sans bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 shadow-sm shadow-slate-100/60 dark:shadow-none" id="project-list-section">
       {/* Header and Add Project Trigger */}
-      <div className="flex items-center justify-between border-b border-slate-50 pb-2.5">
-        <h2 className="text-xs font-bold tracking-wider uppercase text-slate-500 flex items-center gap-2">
-          <FolderKanban className="w-4 h-4 text-indigo-600" />
+      <div className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-2.5">
+        <h2 className="text-xs font-bold tracking-wider uppercase text-slate-500 dark:text-slate-400 flex items-center gap-2">
+          <FolderKanban className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
           Projects
         </h2>
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="text-slate-500 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 p-1.5 rounded-lg transition border border-slate-200/60"
+          className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 p-1.5 rounded-lg transition border border-slate-200/60 dark:border-slate-700"
           title="Create New Project"
           id="toggle-add-project-btn"
         >
@@ -71,10 +71,10 @@ export function ProjectList({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             onSubmit={handleSubmit}
-            className="flex flex-col gap-2 overflow-hidden bg-slate-50 border border-slate-100 p-3 rounded-xl"
+            className="flex flex-col gap-2 overflow-hidden bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 p-3 rounded-xl"
             id="add-project-form"
           >
-            <label className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">
+            <label className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">
               Project Name
             </label>
             <input
@@ -82,7 +82,7 @@ export function ProjectList({
               placeholder="e.g. Mobile App Redesign"
               value={newProjectName}
               onChange={(e) => setNewProjectName(e.target.value)}
-              className="bg-white text-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:outline-none transition w-full"
+              className="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:outline-none transition w-full placeholder:text-slate-400 dark:placeholder:text-slate-500"
               autoFocus
               id="new-project-name-input"
             />
@@ -90,7 +90,7 @@ export function ProjectList({
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
-                className="text-slate-500 hover:text-slate-800 text-xs px-2.5 py-1.5 rounded"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 text-xs px-2.5 py-1.5 rounded"
                 id="cancel-add-project-btn"
               >
                 Cancel
@@ -109,10 +109,10 @@ export function ProjectList({
 
       {/* Projects list */}
       {projects.length === 0 ? (
-        <div className="bg-slate-50 border border-slate-200/50 rounded-xl p-6 text-center" id="empty-projects-state">
-          <FolderKanban className="w-8 h-8 text-slate-300 mx-auto mb-2.5 stroke-[1.5]" />
-          <p className="text-slate-600 text-sm font-semibold">No projects created yet.</p>
-          <p className="text-slate-400 text-xs mt-1 max-w-[200px] mx-auto">
+        <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200/50 dark:border-slate-700 rounded-xl p-6 text-center" id="empty-projects-state">
+          <FolderKanban className="w-8 h-8 text-slate-300 dark:text-slate-600 mx-auto mb-2.5 stroke-[1.5]" />
+          <p className="text-slate-600 dark:text-slate-300 text-sm font-semibold">No projects created yet.</p>
+          <p className="text-slate-400 dark:text-slate-500 text-xs mt-1 max-w-[200px] mx-auto">
             Create a project above to get started with your sprint board.
           </p>
         </div>
@@ -132,8 +132,8 @@ export function ProjectList({
                 key={project.id}
                 className={`group relative rounded-xl border transition duration-150 ${
                   isActive
-                    ? "bg-indigo-50/60 border-indigo-100"
-                    : "bg-transparent hover:bg-slate-50 border-transparent"
+                    ? "bg-indigo-50/60 dark:bg-indigo-500/10 border-indigo-100 dark:border-indigo-500/30"
+                    : "bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800/60 border-transparent"
                 }`}
                 id={`project-row-${project.id}`}
               >
@@ -147,7 +147,7 @@ export function ProjectList({
                       type="text"
                       value={editingNameValue}
                       onChange={(e) => setEditingNameValue(e.target.value)}
-                      className="bg-white text-slate-900 text-xs px-2.5 py-1.5 rounded-lg border border-indigo-500 focus:outline-none w-full font-sans"
+                      className="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-xs px-2.5 py-1.5 rounded-lg border border-indigo-500 focus:outline-none w-full font-sans"
                       autoFocus
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -161,14 +161,14 @@ export function ProjectList({
                     <div className="flex items-center gap-2 justify-end">
                       <button
                         onClick={() => setEditingProjectId(null)}
-                        className="text-[10px] text-slate-500 hover:text-slate-800 transition"
+                        className="text-[10px] text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition"
                         id={`cancel-project-edit-${project.id}`}
                       >
                         Cancel
                       </button>
                       <button
                         onClick={() => handleSaveEdit(project.id)}
-                        className="text-[10px] text-emerald-600 hover:text-emerald-700 font-bold transition"
+                        className="text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-bold transition"
                         id={`save-project-edit-${project.id}`}
                       >
                         Save
@@ -177,15 +177,15 @@ export function ProjectList({
                   </div>
                 ) : deletingProjectId === project.id ? (
                   <div className="p-3 flex flex-col gap-1.5 w-full text-left" id={`project-delete-confirm-${project.id}`}>
-                    <span className="text-[10px] font-bold text-red-600 uppercase tracking-wide">Delete Project?</span>
-                    <span className="text-[10px] text-slate-500 leading-snug">This deletes all sprints and stories permanently.</span>
+                    <span className="text-[10px] font-bold text-red-600 dark:text-red-400 uppercase tracking-wide">Delete Project?</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">This deletes all sprints and stories permanently.</span>
                     <div className="flex items-center gap-2.5 justify-end mt-1">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setDeletingProjectId(null);
                         }}
-                        className="text-[10px] text-slate-500 hover:text-slate-800 transition font-bold"
+                        className="text-[10px] text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition font-bold"
                         id={`cancel-project-delete-${project.id}`}
                       >
                         Cancel
@@ -208,15 +208,15 @@ export function ProjectList({
                     {/* Select project button area */}
                     <button
                       onClick={() => onSelectProject(project.id)}
-                      className="flex-1 flex items-center justify-between text-left p-3 pr-1 w-full text-slate-700 hover:text-slate-900"
+                      className="flex-1 flex items-center justify-between text-left p-3 pr-1 w-full text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100"
                       id={`project-btn-${project.id}`}
                     >
                       <div className="flex flex-col gap-1 truncate pr-1">
-                        <span className={`font-semibold text-xs truncate transition ${isActive ? "text-indigo-600" : "text-slate-700"}`}>
+                        <span className={`font-semibold text-xs truncate transition ${isActive ? "text-indigo-600 dark:text-indigo-400" : "text-slate-700 dark:text-slate-300"}`}>
                           {project.name}
                         </span>
-                        <span className="text-[10px] text-slate-400 font-mono flex items-center gap-1.5">
-                          <Calendar className="w-3 h-3 text-slate-450" />
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono flex items-center gap-1.5">
+                          <Calendar className="w-3 h-3 text-slate-450 dark:text-slate-500" />
                           {new Date(project.createdAt).toLocaleDateString(undefined, {
                             month: "short",
                             day: "numeric",
@@ -236,7 +236,7 @@ export function ProjectList({
                             setEditingProjectId(project.id);
                             setEditingNameValue(project.name);
                           }}
-                          className="p-1 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-md transition"
+                          className="p-1 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition"
                           title="Rename Project"
                           id={`edit-project-trigger-${project.id}`}
                         >
@@ -247,7 +247,7 @@ export function ProjectList({
                             e.stopPropagation();
                             setDeletingProjectId(project.id);
                           }}
-                          className="p-1 text-slate-400 hover:text-red-600 hover:bg-slate-100 rounded-md transition"
+                          className="p-1 text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition"
                           title="Delete Project"
                           id={`delete-project-trigger-${project.id}`}
                         >
@@ -258,7 +258,7 @@ export function ProjectList({
                       {/* Regular stats badges, hidden on group-hover */}
                       <div className="flex group-hover:hidden items-center gap-1.5">
                         <div
-                          className="flex items-center gap-1 text-[10px] bg-slate-50 text-slate-500 border border-slate-200/60 px-1.5 py-0.5 rounded"
+                          className="flex items-center gap-1 text-[10px] bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700 px-1.5 py-0.5 rounded"
                           title={`${projectSprints.length} Sprints`}
                         >
                           <Layers className="w-3 h-3 text-slate-400" />
@@ -268,8 +268,8 @@ export function ProjectList({
                           <div
                             className={`flex items-center gap-1 text-[10px] border px-1.5 py-0.5 rounded ${
                               activeStories.length > 0
-                                ? "bg-indigo-50 text-indigo-600 border-indigo-100/80"
-                                : "bg-slate-50 text-emerald-600 border-emerald-100/80"
+                                ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-100/80 dark:border-indigo-500/30"
+                                : "bg-slate-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-emerald-100/80 dark:border-emerald-500/30"
                             }`}
                             title={`${activeStories.length} active of ${projectStories.length} total stories`}
                           >

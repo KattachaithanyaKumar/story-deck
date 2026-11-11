@@ -16,9 +16,11 @@ interface StorageBannerProps {
   storageMode: "file" | "local" | "uninitialized";
   fileName: string;
   fileSupport: boolean;
+  needsFilePermission?: boolean;
   onSelectFile: () => void;
   onCreateFile: () => void;
   onUseLocalStorage: () => void;
+  onReconnectFile?: () => void;
   onExport: () => void;
   onImport: (data: AppData) => void;
 }
@@ -27,9 +29,11 @@ export function StorageBanner({
   storageMode,
   fileName,
   fileSupport,
+  needsFilePermission = false,
   onSelectFile,
   onCreateFile,
   onUseLocalStorage,
+  onReconnectFile,
   onExport,
   onImport,
 }: StorageBannerProps) {
@@ -66,28 +70,50 @@ export function StorageBanner({
   };
 
   return (
-    <div className="bg-slate-100 border-b border-slate-200/80 px-4 py-3 text-slate-700" id="storage-banner">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs font-sans">
+    <div className="bg-slate-100 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800 px-4 py-3 text-slate-700 dark:text-slate-300" id="storage-banner">
+      <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs font-sans">
         {/* Left Side Status */}
         <div className="flex items-center gap-2">
           {storageMode === "file" ? (
-            <div className="flex items-center gap-2 text-indigo-700 bg-indigo-50 px-2.5 py-1.5 rounded-lg border border-indigo-100">
-              <FileJson className="w-4 h-4 shrink-0 text-indigo-500" />
-              <span>
-                Connected to file: <strong className="font-mono text-slate-900 font-bold">{fileName}</strong>
-              </span>
-              <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            </div>
+            needsFilePermission ? (
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                <div className="flex items-center gap-2 text-amber-850 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1.5 rounded-lg border border-amber-200/60 dark:border-amber-500/30">
+                  <FileJson className="w-4 h-4 shrink-0 text-amber-600" />
+                  <span>
+                    File saved: <strong className="font-mono text-slate-900 dark:text-slate-100 font-bold">{fileName}</strong> — reconnect to resume saving
+                  </span>
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                </div>
+                {onReconnectFile && (
+                  <button
+                    onClick={onReconnectFile}
+                    className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition self-start"
+                    id="reconnect-file-btn"
+                  >
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+                    Reconnect File
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-500/10 px-2.5 py-1.5 rounded-lg border border-indigo-100 dark:border-indigo-500/30">
+                <FileJson className="w-4 h-4 shrink-0 text-indigo-500" />
+                <span>
+                  Connected to file: <strong className="font-mono text-slate-900 dark:text-slate-100 font-bold">{fileName}</strong>
+                </span>
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              </div>
+            )
           ) : storageMode === "local" ? (
             <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-              <div className="flex items-center gap-2 text-amber-850 bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-200/60">
+              <div className="flex items-center gap-2 text-amber-850 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1.5 rounded-lg border border-amber-200/60 dark:border-amber-500/30">
                 <Database className="w-4 h-4 shrink-0 text-amber-600" />
                 <span>
-                  Using browser storage (<strong className="font-mono text-slate-900 font-bold">localStorage</strong>)
+                  Using browser storage (<strong className="font-mono text-slate-900 dark:text-slate-100 font-bold">localStorage</strong>)
                 </span>
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
               </div>
-              <span className="text-slate-500">
+              <span className="text-slate-500 dark:text-slate-400">
                 {!fileSupport ? (
                   "File System API not supported in this browser."
                 ) : (
@@ -95,7 +121,7 @@ export function StorageBanner({
                     Iframe sandbox may block disk saving.
                     <button
                       onClick={openAppInNewTab}
-                      className="text-indigo-600 hover:text-indigo-700 underline font-semibold flex items-center gap-0.5"
+                      className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 underline font-semibold flex items-center gap-0.5"
                       id="open-new-tab-btn"
                     >
                       Open in standard tab
@@ -107,7 +133,7 @@ export function StorageBanner({
               </span>
             </div>
           ) : (
-            <div className="flex items-center gap-2 text-slate-500">
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
               <Database className="w-4 h-4 animate-pulse text-slate-400" />
               <span>Initializing storage...</span>
             </div>
@@ -121,7 +147,7 @@ export function StorageBanner({
             <>
               <button
                 onClick={onSelectFile}
-                className="bg-white hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition"
+                className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition"
                 title="Select a local JSON file to read and write directly"
                 id="select-file-btn"
               >
@@ -130,7 +156,7 @@ export function StorageBanner({
               </button>
               <button
                 onClick={onCreateFile}
-                className="bg-white hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition"
+                className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition"
                 title="Create a new local JSON file"
                 id="create-file-btn"
               >
@@ -142,7 +168,7 @@ export function StorageBanner({
           {storageMode === "file" && (
             <button
               onClick={onUseLocalStorage}
-              className="bg-white hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition"
+              className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition"
               title="Switch back to standard browser storage"
               id="switch-local-btn"
             >
@@ -151,12 +177,12 @@ export function StorageBanner({
             </button>
           )}
 
-          <div className="h-4 w-[1px] bg-slate-200 mx-1 hidden sm:block" />
+          <div className="h-4 w-[1px] bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
 
           {/* Backup Import/Export triggers (always active) */}
           <button
             onClick={onExport}
-            className="bg-white hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition"
+            className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition"
             title="Download full backup file to your computer"
             id="export-backup-btn"
           >
@@ -166,7 +192,7 @@ export function StorageBanner({
 
           <button
             onClick={handleImportClick}
-            className="bg-white hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition"
+            className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-semibold border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition"
             title="Load workspace data from a downloaded backup file"
             id="import-backup-btn"
           >
