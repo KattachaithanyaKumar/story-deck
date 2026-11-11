@@ -7,7 +7,7 @@ interface MarkdownViewerProps {
 
 export function MarkdownViewer({ text = "" }: MarkdownViewerProps) {
   if (!text.trim()) {
-    return <span className="text-slate-400 italic text-sm">No description provided.</span>;
+    return <span className="text-slate-500 dark:text-slate-400 italic text-sm">No description provided.</span>;
   }
 
   const lines = text.split("\n");
@@ -18,21 +18,21 @@ export function MarkdownViewer({ text = "" }: MarkdownViewerProps) {
     // Check headings
     if (trimmed.startsWith("### ")) {
       return (
-        <h4 key={idx} className="text-base font-bold text-slate-100 mt-3 mb-1 font-display">
+        <h4 key={idx} className="text-base font-bold text-slate-900 dark:text-slate-100 mt-3 mb-1 font-display">
           {parseInlineMarkdown(trimmed.substring(4))}
         </h4>
       );
     }
     if (trimmed.startsWith("## ")) {
       return (
-        <h3 key={idx} className="text-lg font-bold text-slate-100 mt-4 mb-2 font-display">
+        <h3 key={idx} className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-4 mb-2 font-display">
           {parseInlineMarkdown(trimmed.substring(3))}
         </h3>
       );
     }
     if (trimmed.startsWith("# ")) {
       return (
-        <h2 key={idx} className="text-xl font-bold text-slate-100 mt-5 mb-3 font-display">
+        <h2 key={idx} className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-5 mb-3 font-display">
           {parseInlineMarkdown(trimmed.substring(2))}
         </h2>
       );
@@ -41,7 +41,7 @@ export function MarkdownViewer({ text = "" }: MarkdownViewerProps) {
     // Check list item
     if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
       return (
-        <li key={idx} className="ml-4 list-disc text-slate-300 text-sm py-0.5">
+        <li key={idx} className="ml-4 list-disc text-slate-700 dark:text-slate-300 text-sm py-0.5">
           {parseInlineMarkdown(trimmed.substring(2))}
         </li>
       );
@@ -51,7 +51,7 @@ export function MarkdownViewer({ text = "" }: MarkdownViewerProps) {
     const numMatch = trimmed.match(/^(\d+)\.\s(.*)/);
     if (numMatch) {
       return (
-        <li key={idx} className="ml-4 list-decimal text-slate-300 text-sm py-0.5" value={parseInt(numMatch[1], 10)}>
+        <li key={idx} className="ml-4 list-decimal text-slate-700 dark:text-slate-300 text-sm py-0.5" value={parseInt(numMatch[1], 10)}>
           {parseInlineMarkdown(numMatch[2])}
         </li>
       );
@@ -60,7 +60,7 @@ export function MarkdownViewer({ text = "" }: MarkdownViewerProps) {
     // Blockquote
     if (trimmed.startsWith("> ")) {
       return (
-        <blockquote key={idx} className="border-l-4 border-slate-600 pl-3 italic text-slate-400 my-2 text-sm">
+        <blockquote key={idx} className="border-l-4 border-slate-300 dark:border-slate-600 pl-3 italic text-slate-500 dark:text-slate-400 my-2 text-sm">
           {parseInlineMarkdown(trimmed.substring(2))}
         </blockquote>
       );
@@ -73,7 +73,7 @@ export function MarkdownViewer({ text = "" }: MarkdownViewerProps) {
 
     // Standard paragraph
     return (
-      <p key={idx} className="text-slate-300 text-sm leading-relaxed mb-1.5">
+      <p key={idx} className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-1.5">
         {parseInlineMarkdown(line)}
       </p>
     );
@@ -126,7 +126,7 @@ function parseInlineMarkdown(text: string): React.ReactNode[] {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-indigo-400 hover:text-indigo-300 underline font-medium cursor-pointer"
+      className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 underline font-medium cursor-pointer"
       id={`md-link-${Math.random().toString(36).substr(2, 5)}`}
     >
       {label}
@@ -135,17 +135,17 @@ function parseInlineMarkdown(text: string): React.ReactNode[] {
 
   // Bold: **text**
   processRegex(/\*\*([^*]+)\*\*/g, (_, boldText) => (
-    <strong className="font-semibold text-white">{boldText}</strong>
+    <strong className="font-semibold text-slate-900 dark:text-white">{boldText}</strong>
   ));
 
   // Italic: *text*
   processRegex(/\*([^*]+)\*/g, (_, italicText) => (
-    <em className="italic text-slate-200">{italicText}</em>
+    <em className="italic text-slate-700 dark:text-slate-200">{italicText}</em>
   ));
 
   // Inline Code: `code`
   processRegex(/`([^`]+)`/g, (_, codeText) => (
-    <code className="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 font-mono text-xs border border-slate-700/50">
+    <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 font-mono text-xs border border-slate-200 dark:border-slate-700/50">
       {codeText}
     </code>
   ));
